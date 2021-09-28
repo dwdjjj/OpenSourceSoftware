@@ -1,3 +1,8 @@
+Python 3.8.8 (default, Apr 13 2021, 15:08:03) [MSC v.1916 64 bit (AMD64)]
+Type "copyright", "credits" or "license" for more information.
+
+IPython 7.22.0 -- An enhanced Interactive Python.
+
 runfile('C:/Users/82104/Desktop/covid19_statistics_17101184.py', wdir='C:/Users/82104/Desktop')
 ### Korean Population by Region
 * Total population: 51669716
