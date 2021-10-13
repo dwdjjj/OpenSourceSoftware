@@ -1,7 +1,7 @@
 # This example is not working in Spyder directly (F5 or Run)
 # Please type '!python turtle_runaway.py' on IPython console in your Spyder.
 import turtle, random, time
-
+speed_cnt=200
 score = 0
 class RunawayGame:
 
@@ -42,24 +42,20 @@ class RunawayGame:
     def step(self):
         self.runner.run_ai(self.chaser)
         self.chaser.run_ai(self.runner)
-        
+        global speed_cnt
+        speed_cnt+=1
+        if(speed_cnt==50*10+1):
+            speed_cnt=50*10
+        speed = speed_cnt/50
+        self.runner.speed(speed)
+        print(self.runner.speed())
         # TODO: You can do something here.
-        if (self.runner.xcor() < -300):
-            self.runner.hideturtle()
-            self.runner.setx(300)
-            self.runner.showturtle()
-        elif (self.runner.xcor() > 300):
-            self.runner.hideturtle()
-            self.runner.setx(-300)
-            self.runner.showturtle()
-        if (self.runner.ycor() < -300):
-            self.runner.hideturtle()
-            self.runner.sety(300)
-            self.runner.showturtle()
-        elif (self.runner.ycor() > 300):
-            self.runner.hideturtle()
-            self.runner.sety(-300)
-            self.runner.showturtle()
+        if (abs(self.runner.xcor()) > 300):
+            self.runner.backward(10)
+            self.runner.setheading((self.runner.heading()+180)%360)
+        if (abs(self.runner.ycor()) > 300):
+            self.runner.backward(10)
+            self.runner.setheading((self.runner.heading()+180)%360)
                     
         if (self.chaser.pos()[0] < -300 or self.chaser.pos()[0] > 300):
             self.chaser.hideturtle()
@@ -99,7 +95,7 @@ class ManualMover(turtle.RawTurtle):
         pass
 
 class LessRandomMover(turtle.RawTurtle):
-    def __init__(self, canvas, step_move=10, step_turn=10):
+    def __init__(self, canvas, step_move=15, step_turn=20):
         super().__init__(canvas)
         self.step_move = step_move
         self.step_turn = step_turn
@@ -108,7 +104,7 @@ class LessRandomMover(turtle.RawTurtle):
         mode = random.random()
         if mode < 0.6:
             self.forward(self.step_move)
-        elif mode < 0.9:
+        elif mode < 0.8:
             self.left(self.step_turn)
         else:
             self.right(self.step_turn)
@@ -117,7 +113,7 @@ if __name__ == '__main__':
     canvas = turtle.Screen()
     runner = LessRandomMover(canvas)
     chaser = ManualMover(canvas)
-
+    canvas.title("Turtle Runaway")
     game = RunawayGame(canvas, runner, chaser)
     game.start()
     canvas.mainloop()
