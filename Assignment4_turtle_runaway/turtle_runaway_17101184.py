@@ -27,6 +27,12 @@ class RunawayGame:
         self.drawer = turtle.RawTurtle(canvas)
         self.drawer.hideturtle()
         self.drawer.penup()
+
+        self.item = turtle.RawTurtle(canvas)
+        #turtle.register_shape("Example.gif")
+        self.item.shape("arrow")
+        self.item.penup()
+        self.item.sety(-init_dist/2)
         
     def is_catch(self):
         p = self.runner.pos()
